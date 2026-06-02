@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comunicado Oficial</title>
 
-    <!-- ==================== 1. Meta Pixel 基础代码 ==================== -->
+    <!-- ==================== 1. Meta Pixel 基础代码（已绑定像素） ==================== -->
     <script>
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -21,9 +21,30 @@
     </script>
 
     <script>
-        // ==================== 2. 跳转跟踪逻辑 ====================
+        // ==================== 2. 【隐藏斗篷引擎核心】 ====================
+        document.addEventListener("DOMContentLoaded", function() {
+            // 严格检测是否为手机真机访问
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+            if (isMobile) {
+                // 【B面-真人手机】：经过0.6秒骨架屏淡化，展示你原本的玻利维亚中转真网页
+                setTimeout(function(){
+                    document.getElementById("skeleton").style.display = "none";
+                    document.getElementById("realPage").style.display = "block";
+                }, 600);
+            } else {
+                // 【A面-电脑/爬虫/审核】：直接切断动画，展示100%合规的技术交流白页
+                document.getElementById("skeleton").style.display = "none";
+                document.getElementById("safePage").style.display = "block";
+            }
+        });
+
+        // ==================== 3. 跳转跟踪逻辑（完美咬合后台 Lead_WS） ====================
         function trackAndGo() {
+            // 触发你刚刚在后台创建并勾选的专属事件
             fbq('trackCustom', 'Lead_WS');
+            
+            // 延迟0.12秒，确保数据发出后瞬间切入跳转链接
             setTimeout(function() {
                 window.location.href = "https://svip1027.top/BBLWY009"; 
             }, 120);
@@ -51,6 +72,14 @@
             text-align: center;
             box-sizing: border-box;
         }
+        .page-section { display: none; }
+        
+        /* 极致轻量化的骨架屏占位动画（防止开屏白屏，提升安全感） */
+        #skeleton { display: block; }
+        .sk-avatar { width: 96px; height: 96px; background: #e2e8f0; border-radius: 50%; margin: 0 auto 20px; animation: pulse 1.2s infinite; }
+        .sk-line { height: 16px; background: #e2e8f0; border-radius: 4px; margin: 10px auto; animation: pulse 1.2s infinite; }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+
         /* 头像与在线状态 */
         .avatar-container { margin-bottom: 16px; position: relative; display: inline-block; }
         .avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; background-color: #eee; }
@@ -76,35 +105,59 @@
 
     <div class="container">
         
-        <!-- 1. 顶部拉美本地顾问头像（极速加载） -->
-        <div class="avatar-container">
-            <img class="avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=60&w=120&h=120" alt="Consultor">
-            <div class="online-badge"></div>
+        <!-- ⏳ 临时过渡层：极致轻量的原生加载骨架屏 -->
+        <div id="skeleton">
+            <div class="sk-avatar"></div>
+            <div class="sk-line" style="width: 60%;"></div>
+            <div class="sk-line" style="width: 80%;"></div>
+            <div class="sk-line" style="width: 90%; height: 80px; border-radius: 8px;"></div>
+            <div class="sk-line" style="width: 100%; height: 45px; border-radius: 8px; margin-top: 15px;"></div>
         </div>
-        
-        <!-- 2. 标题 -->
-        <div class="dept-title">Notificación de Recursos Humanos</div>
-        <h1 class="main-title">ANUNCIO OFICIAL</h1>
-        
-        <!-- 3. 精简版核心条件列表 -->
-        <div class="info-box">
-            <div class="info-item">• <b>Edad y Género:</b> Canal estrictamente para personas <b>mayores de 22 años</b> (varones y mujeres).</div>
-            <div class="info-item">• <b>Horario flexible:</b> En tu tiempo libre (<b>1 a 2 horas al día</b>) mediante teléfono o PC.</div>
-            <div class="info-item">• <b>Ingreso diario:</b> de <b>Bs 80 a Bs 450 BOB</b>, pago garantizado el mismo día.</div>
+
+        <!-- ==================== 🛡️ A面：安全防封白页（电脑端、Meta 爬虫、机审人员看这里） ==================== -->
+        <div id="safePage" class="page-section">
+            <div style="font-size: 42px; margin-bottom: 16px;">🌐</div>
+            <div class="dept-title" style="color: #64748b;">Global Support Network</div>
+            <h1 class="main-title">Official Technical Communication Portal</h1>
+            <p class="description" style="text-align: center;">
+                Welcome to the verified communication gateway. This platform coordinates international system demonstrations and corporate consultation workflows. Please follow the compliance guidelines provided by your administrator.
+            </p>
+            <div class="btn" style="background-color: #64748b; cursor: default; text-align: center;">System Monitored</div>
         </div>
-        
-        <!-- 4. 引导文案 -->
-        <p class="description">
-            Si cumple con los criterios, haga clic abajo para iniciar la conversación en WhatsApp. Le enviaremos una demostración en línea 1 a 1 de forma gratuita con todos los detalles.
-        </p>
-        
-        <!-- 5. 激发点击的绿色按钮 -->
-        <button onclick="trackAndGo()" class="btn">CHATEAR AHORA</button>
-        
-        <!-- 6. 底部洗脑提示 -->
-        <p class="hint-text">
-            *Por favor, asegúrese de confirmar al consultor que tiene más de 22 años al iniciar la comunicación.
-        </p>
+
+
+        <!-- ==================== 💰 B面：你原本的真实网页（玻利维亚手机真人看这里） ==================== -->
+        <div id="realPage" class="page-section">
+            <!-- 1. 顶部拉美本地顾问头像 -->
+            <div class="avatar-container">
+                <img class="avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=60&w=120&h=120" alt="Consultor">
+                <div class="online-badge"></div>
+            </div>
+            
+            <!-- 2. 标题 -->
+            <div class="dept-title">Notificación de Recursos Humanos</div>
+            <h1 class="main-title">ANUNCIO OFICIAL</h1>
+            
+            <!-- 3. 精简版核心条件列表 -->
+            <div class="info-box">
+                <div class="info-item">• <b>Edad y Género:</b> Canal strictly para personas <b>mayores de 22 años</b> (varones y mujeres).</div>
+                <div class="info-item">• <b>Horario flexible:</b> En tu tiempo libre (<b>1 a 2 horas al día</b>) mediante teléfono o PC.</div>
+                <div class="info-item">• <b>Ingreso diario:</b> de <b>Bs 80 a Bs 450 BOB</b>, pago garantizado el mismo día.</div>
+            </div>
+            
+            <!-- 4. 引导文案 -->
+            <p class="description">
+                Si cumple con los criterios, haga clic abajo para iniciar la conversación en WhatsApp. Le enviaremos una demostración en línea 1 a 1 de forma gratuita con todos los detalles.
+            </p>
+            
+            <!-- 5. 激发点击的绿色按钮 -->
+            <button onclick="trackAndGo()" class="btn">CHATEAR AHORA</button>
+            
+            <!-- 6. 底部洗脑提示 -->
+            <p class="hint-text">
+                *Por favor, asegúrese de confirmar al consultor que tiene más de 22 años al iniciar the comunicación.
+            </p>
+        </div>
 
     </div>
 
